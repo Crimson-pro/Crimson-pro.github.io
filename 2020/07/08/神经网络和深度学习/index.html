@@ -15,15 +15,17 @@
 <meta property="og:site_name" content="WULIWU">
 <meta property="og:description" content="建立深度学习的几个步骤及其注意事项">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?L(Y,y">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?J">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?J">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?J">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?J">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?J">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?J">
 <meta property="article:published_time" content="2020-07-08T04:42:32.284Z">
-<meta property="article:modified_time" content="2020-07-08T08:57:49.645Z">
+<meta property="article:modified_time" content="2020-07-08T10:16:33.749Z">
 <meta property="article:author" content="WuChen">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://latex.codecogs.com/gif.latex?L(Y,y">
+<meta name="twitter:image" content="https://latex.codecogs.com/gif.latex?J">
   
     <link rel="alternative" href="/atom.xml" title="WULIWU" type="application/atom+xml">
   
@@ -185,23 +187,45 @@
 <script type="math/tex; mode=display">
 logical = Z = w^tx+b</script><p>很明显上面这个公式得出的结果不可能一定是一个介于0-1之间的数，而我们所希望的，是计算机给出这张图片的猫片的概率有多大，所以我们在这里需要对logistics模型得出的结果Z进行归一化，这样各张图片的Z之间就具有了更好的可比性。归一化使用的是sigmoid函数，其方法如下所示：</p>
 <script type="math/tex; mode=display">
-\sigma (Z)=\frac{1}{1+e^{-z}}</script><p>进行完该步骤之后，计算机每次得出的结果都是一个概率值。</p>
+\sigma (A)=\frac{1}{1+e^{-z}}</script><p>进行完该步骤之后，计算机每次得出的结果都是一个概率值。</p>
 <h2 id="2-寻找公式中的影响因素"><a href="#2-寻找公式中的影响因素" class="headerlink" title="(2)寻找公式中的影响因素"></a>(2)寻找公式中的影响因素</h2><p>在第一步选择好将要使用的模型后，就可以从模型的对应计算公式中找到相应的影响因素，不如在logistics模型中，主要的影响因子有“ω”和“b”。而x则为公式的输入对象。Z为公式的输出对象。</p>
 <h2 id="3-正向推导公式"><a href="#3-正向推导公式" class="headerlink" title="(3)正向推导公式"></a>(3)正向推导公式</h2><p>第二步找到影响因子后就要正向推导该模型公式。即怎么从影响因子计算出Z。可以看到，是先使用ω和x做乘法，再加上一个b，也就是说公式可以如下所示这样推导：</p>
 <script type="math/tex; mode=display">
 u = w^t*x</script><script type="math/tex; mode=display">
 y = u+b</script><script type="math/tex; mode=display">
-Z = u+y</script><p>从正向推导中可以看出，除了ω和b之外，还有两个中间变量u和y。这些变量共同作用，计算出了Z。</p>
+Z = u+y</script><p>从正向推导中可以看出，除了ω和b之外，还有两个中间变量u和y。这些变量共同作用，计算出了Z。这里补充说明的是，x可以是一个矩阵形式的输入，而ω同样也可以以一个矩阵的形式进行输入。</p>
 <h2 id="4-建立训练集"><a href="#4-建立训练集" class="headerlink" title="(4)建立训练集"></a>(4)建立训练集</h2><p>在logistics模型的这个公式中，我们只需要知道ω和b的取值，就可以使用这个模型来进行结果的预测。比如预测一张输入的图片是不是一张“猫猫”的照片。而这个ω和b的取值由电脑给出。也就是说只要给电脑大量的图片，并且表明图片中存在“猫猫”的概率有多大。即可以让电脑自行判断ω和b取什么值时。得出的预测结果是最准确的，这就是机器学习。而上面给出大量图片的操作就是建立一个训练集的操作。<u>（至于这里为什么给出的训练集中一张图片是不是猫片用概率来表示而不是用01，这里我也不懂，等待后期更新。）</u></p>
-<p>基于上面这个训练集的定义，我们就可以假定训练集中一张图片是猫片的概率为Y。假定计算机通过机器学习之后给出的相同的这张图片是猫片的概率为y。这时，我们就可以定义出训练的损失函数，具体公式如下所示：</p>
-<p><img src="https://latex.codecogs.com/gif.latex?L(Y,y" alt="">=-(Y*ln(y)&plus;(1-Y)ln(1-y)))</p>
-<p>当然，上面这个公式只是针对训练集中一张图片的预测准确性进行的判断，由此可以定义出针对于真个训练集的成本函数Cost（也叫<img src="https://latex.codecogs.com/gif.latex?J" alt="This is the rendered form of the equation. You can not edit this directly. Right click will give you the option to save the image, and in most browsers you can drag the image onto your desktop or another program.">函数），具体公式如下所示：</p>
+<p>基于上面这个训练集的定义，我们就可以假定训练集中一张图片是猫片的概率为Y。假定计算机通过机器学习之后给出的相同的这张图片是猫片的概率为A。这时，我们就可以定义出训练的损失函数，具体公式如下所示：</p>
 <script type="math/tex; mode=display">
-J(\omega ,b)=\frac{1}{m}*\sum_{i=1}^{m}L(Y^{i},y^{i})</script><p>把所有图片的预测准确性判断加起来，可以看出，在<img src="https://latex.codecogs.com/gif.latex?J" alt="This is the rendered form of the equation. You can not edit this directly. Right click will give you the option to save the image, and in most browsers you can drag the image onto your desktop or another program.">函数中只有ω和b参数对其造成了影响。我们目前的目的就是要使得<img src="https://latex.codecogs.com/gif.latex?J" alt="This is the rendered form of the equation. You can not edit this directly. Right click will give you the option to save the image, and in most browsers you can drag the image onto your desktop or another program.">函数的取值尽可能的小。其值越小，说明机器学习效果越好，预测的越准确，所以我们要分析ω和b参数，也就是第5步要做的事情。</p>
+L(Y,A)=-(Y*ln(A)+(1-Y)ln(1-A))</script><p>当然，上面这个公式只是针对训练集中一张图片的预测准确性进行的判断，由此可以定义出针对于真个训练集的成本函数Cost（也叫<img src="https://latex.codecogs.com/gif.latex?J" alt="This is the rendered form of the equation. You can not edit this directly. Right click will give you the option to save the image, and in most browsers you can drag the image onto your desktop or another program.">函数），具体公式如下所示：</p>
+<script type="math/tex; mode=display">
+J(\omega ,b)=\frac{1}{m}*\sum_{i=1}^{m}L(Y^{i},A^{i})</script><p>把所有图片的预测准确性判断加起来，可以看出，在<img src="https://latex.codecogs.com/gif.latex?J" alt="This is the rendered form of the equation. You can not edit this directly. Right click will give you the option to save the image, and in most browsers you can drag the image onto your desktop or another program.">函数中只有ω和b参数对其造成了影响。我们目前的目的就是要使得<img src="https://latex.codecogs.com/gif.latex?J" alt="This is the rendered form of the equation. You can not edit this directly. Right click will give you the option to save the image, and in most browsers you can drag the image onto your desktop or another program.">函数的取值尽可能的小。其值越小，说明机器学习效果越好，预测的越准确，所以我们要分析ω和b参数，也就是第5步要做的事情。</p>
 <h2 id="5-对训练集中的每一个数据都进行反向推导"><a href="#5-对训练集中的每一个数据都进行反向推导" class="headerlink" title="(5)对训练集中的每一个数据都进行反向推导"></a>(5)对训练集中的每一个数据都进行反向推导</h2><p>在前面的第3步中，我们进行的正向推导，现在我们需要进行反向推导。至于为什么要进行反向推导，因为计算机拿到的训练集都是有“答案”的训练集了。计算机需要根据这个“答案”去分析，各个影响因子是如何相互作用后产生该答案的，这些相互影响的影响因子之间的取值是多少。下面就让我们开始反向推导：</p>
 <script type="math/tex; mode=display">
-logical = Z = w^tx+b</script><p>这是原公式。这里要再说明一下，logistics模型一般使用梯度下降法来寻找ω和b的最佳取值</p>
-
+logical = Z = w^tx+b</script><p>这是原公式。这里要再说明一下，logistics模型一般使用梯度下降法来寻找ω和b的最佳取值,也就是让ω和b沿着斜率最大的方向进行下降，尽量缩短机器学习所需要的的时间，病提高准确率。具体公式如下所示：</p>
+<script type="math/tex; mode=display">
+\omega=\omega -\alpha *\frac{\partial J(\omega ,b)) }{\partial \omega }</script><script type="math/tex; mode=display">
+b=b -\alpha *\frac{\partial J(\omega ,b)) }{\partial b }</script><p>α是机器的学习效率，即用<img src="https://latex.codecogs.com/gif.latex?J" alt="This is the rendered form of the equation. You can not edit this directly. Right click will give you the option to save the image, and in most browsers you can drag the image onto your desktop or another program.">函数对ω和b求偏导。</p>
+<p>当然，从这里可以看出来，如果直接用<img src="https://latex.codecogs.com/gif.latex?J" alt="This is the rendered form of the equation. You can not edit this directly. Right click will give you the option to save the image, and in most browsers you can drag the image onto your desktop or another program.">函数来对ω或者对b求偏导数，那么难度还是很大的，因为从ω，b到<img src="https://latex.codecogs.com/gif.latex?J" alt="This is the rendered form of the equation. You can not edit this directly. Right click will give you the option to save the image, and in most browsers you can drag the image onto your desktop or another program.">函数经历了一系列的变换，这也是反向推导存在的意义。我们可以根据求导的法则一步一步进行反向的求导。</p>
+<p>1.由于<strong>J</strong>函数本身由多个L函数加和而来，所以对<strong>J</strong>函数求导就是分别对每一个L函数求导，L函数的求导过程如下所示：</p>
+<script type="math/tex; mode=display">
+-(Y*ln(A)+(1-Y)ln(1-A))——>-\frac{Y}{A}+\frac{1-Y}{1-A}——>\frac{dL}{dA}</script><p>即对y进行求导。</p>
+<p>2.下面就可以开始对A函数，也就是有sigmoid函数得出的函数进行求导，即dA/dZ。其计算公式如下所示：</p>
+<script type="math/tex; mode=display">
+\frac{1}{1+e^{-z}}——>\frac{e^{-z}}{(1+e^{-z})^{2}}</script><p>同时，又有如下公式：</p>
+<script type="math/tex; mode=display">
+\sigma (A)=\frac{1}{1+e^{-z}}</script><p>所以，用上式替换上上式中的值，可得：</p>
+<script type="math/tex; mode=display">
+\frac{e^{-z}}{(1+e^{-z})^{2}}——>A(1-A)——>\frac{dA}{dZ}</script><p>所以dL/dZ如下所示为</p>
+<script type="math/tex; mode=display">
+A-Y</script><p>下面就要来计算dZ/dω，dZ/db和dZ/dx了。这里假设ω,x只有一个。当然，ω和x可以是矩阵形式，也就是多个。具体公式如下所示：</p>
+<script type="math/tex; mode=display">
+\frac{dZ}{d\omega }=xdZ</script><script type="math/tex; mode=display">
+db=dZ</script><p>而这里的dZ可以理解为dZ=A-Y。</p>
+<p>所以就算出了梯度下降法的各个影响参数：</p>
+<script type="math/tex; mode=display">
+\omega=\omega -\alpha dZ=\omega-\alpha*(A-Y)</script><script type="math/tex; mode=display">
+b=b -\alpha dZ=b -\alpha*(A-Y)</script><h2 id="6-把各个参数结果相加后计算出全局参数值"><a href="#6-把各个参数结果相加后计算出全局参数值" class="headerlink" title="(6)把各个参数结果相加后计算出全局参数值"></a>(6)把各个参数结果相加后计算出全局参数值</h2>
       
 
       
